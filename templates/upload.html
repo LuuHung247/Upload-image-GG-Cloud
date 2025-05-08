@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Ứng dụng Hình ảnh</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body { padding-top: 20px; background-color: #e9ecef; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .container { max-width: 700px; background-color: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); margin-top: 30px;}
+        h1 { color: #343a40; margin-bottom: 30px; text-align: center; font-weight: 300; letter-spacing: -0.5px; }
+        .form-label { font-weight: 600; color: #495057; }
+        .form-control, .form-select { border-radius: 0.375rem; }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-primary:hover { background-color: #0056b3; border-color: #0056b3; }
+        .alert { margin-top: 20px; border-radius: 0.375rem; }
+        nav.nav-pills .nav-link {
+            color: #007bff;
+            border: 1px solid transparent;
+            margin: 0 5px;
+            padding: 10px 20px;
+            border-radius: 0.375rem;
+        }
+        nav.nav-pills .nav-link.active, nav.nav-pills .nav-link:hover {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .nav-pills { margin-bottom: 40px; justify-content: center; }
+        .upload-icon { font-size: 1.5em; margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="nav nav-pills flex-column flex-sm-row">
+            <a class="flex-sm-fill text-sm-center nav-link active" aria-current="page" href="{{ url_for('upload_page') }}"><i class="fas fa-cloud-upload-alt"></i> Tải lên</a>
+            <a class="flex-sm-fill text-sm-center nav-link" href="{{ url_for('gallery_page') }}"><i class="fas fa-images"></i> Xem Thư viện</a>
+        </nav>
+
+        <h1><i class="fas fa-camera-retro"></i> {{ title }}</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-4">
+                <label for="file" class="form-label">Chọn Hình ảnh:</label>
+                <input type="file" class="form-control form-control-lg" id="file" name="file" accept="image/*" required>
+            </div>
+            <div class="mb-4">
+                <label for="caption" class="form-label">Chú thích (Tùy chọn):</label>
+                <input type="text" class="form-control" id="caption" name="caption" placeholder="Mô tả ngắn về hình ảnh">
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg"><span class="upload-icon"><i class="fas fa-upload"></i></span>Tải lên Hình ảnh</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
